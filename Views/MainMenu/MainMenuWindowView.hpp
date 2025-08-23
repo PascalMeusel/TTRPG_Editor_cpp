@@ -7,10 +7,11 @@
 #include <iostream>
 
 #include <imgui.h>
-#include <imgui/misc/cpp/imgui_stdlib.h>
+#include <extern/imgui/misc/cpp/imgui_stdlib.h>
 #include <GLFW/glfw3.h>
 
 #include "../IWindowView.hpp"
+#include "../Editor/EditorWindowView.hpp"
 #include "../../Models/DataBaseManager.hpp"
 #include "../../Models/Rulesets/DND/DND5e.hpp"
 
@@ -29,8 +30,8 @@ enum class MainMenuOption
 class MainMenuWindowView : public IWindowView
 {
 public:
-    MainMenuWindowView(std::shared_ptr<Application> parent)
-        : IWindowView(parent)
+    MainMenuWindowView(std::shared_ptr<EditorWindowView> editorView)
+        : _editor(editorView)
     {
         ruleSets.push_back(std::make_unique<DND5e>()); // Add a default ruleset, e.g., DND5e
     }
@@ -56,4 +57,6 @@ protected:
     void openEditor(Campaign campaign);
 
     MainMenuOption _currentChoice = MainMenuOption::None;
+
+    std::shared_ptr<EditorWindowView> _editor;
 };

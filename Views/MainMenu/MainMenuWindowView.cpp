@@ -120,9 +120,14 @@ void MainMenuWindowView::handleNewGame()
                     campaignNameExists = true;
             }
             if (!campaignNameExists)
+            {
                 DatabaseManager::getInstance()->saveCampaign(newCampaign);
+                openEditor(newCampaign);
+            }
             else
+            {
                 ImGui::OpenPopup("Creation Failed");
+            }
             // Close the popup
             _showNewGamePopup = false;
             ImGui::CloseCurrentPopup();
@@ -160,6 +165,7 @@ void MainMenuWindowView::handleLoadGame()
         if (ImGui::Button("Load", ImVec2(120, 0)))
         {
             auto chosenCampaign = DatabaseManager::getInstance()->loadCampaign(campaignNames[_selectedLoadGameIndex]);
+            openEditor(chosenCampaign);
             // Close the popup
             _showLoadGamePopup = false;
             ImGui::CloseCurrentPopup();
@@ -170,6 +176,7 @@ void MainMenuWindowView::handleLoadGame()
 
 void MainMenuWindowView::openEditor(Campaign campaign)
 {
-    isVisible = false;
-    _parentApplication->activateNewWindow(WindowTypes::EditorWindow);
+    this->isVisible = false;
+    _editor->isVisible = true;
+    _editor->setCurrentCampaign(campaign);
 }

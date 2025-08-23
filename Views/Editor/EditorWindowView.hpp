@@ -7,14 +7,11 @@
 
 class Application;
 
-class EditorView : public IWindowView
+class EditorWindowView : public IWindowView
 {
 public:
-    EditorView(std::shared_ptr<Application> parent)
-        : IWindowView(parent)
-    {
-    }
-    ~EditorView() = default;
+    EditorWindowView() = default;
+    ~EditorWindowView() = default;
 
     // Function to update the view
     void update(GLFWwindow* window) override;

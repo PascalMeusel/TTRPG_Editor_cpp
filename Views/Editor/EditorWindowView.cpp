@@ -1,48 +1,51 @@
 #include "EditorWindowView.hpp"
+#include "imgui.h"
 
-void EditorView::update(GLFWwindow *window)
+void EditorWindowView::update(GLFWwindow *window)
 {
-    if(!isVisible)
+    if (!isVisible)
         return;
-    // Get the main viewport to determine the available drawing area
-    ImGuiViewport* mainViewport = ImGui::GetMainViewport();
 
-    // Set our next window to be the size of the main viewport, with no decorations
-    ImGui::SetNextWindowPos(mainViewport->WorkPos);
-    ImGui::SetNextWindowSize(mainViewport->WorkSize);
-    ImGui::SetNextWindowBgAlpha(0.0f); // Make the window transparent
+    // Make the window cover the entire application area
+    const ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->WorkPos);
+    ImGui::SetNextWindowSize(viewport->WorkSize);
+    ImGui::SetNextWindowViewport(viewport->ID);
 
-    // Define window flags to make it act as a drawing canvas rather than a window
-    ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoTitleBar |
-                                   ImGuiWindowFlags_NoResize |
-                                   ImGuiWindowFlags_NoMove |
-                                   ImGuiWindowFlags_NoCollapse |
-                                   ImGuiWindowFlags_NoScrollbar |
-                                   ImGuiWindowFlags_NoSavedSettings |
-                                   ImGuiWindowFlags_NoDocking;
-
-    // Begin a "window" that covers the entire viewport.
-    if (ImGui::Begin("EditorContainer", nullptr, windowFlags))
-    {
-        // Here you can add your editor controls and widgets
-        ImGui::Text("Editor View");
-        // Add more editor-specific UI elements here
-
-        // Example: A simple text input field
-        static char textBuffer[256] = "";
-        ImGui::InputText("Text Input", textBuffer, sizeof(textBuffer));
-
-        // Example: A button to simulate saving changes
-        if (ImGui::Button("Save Changes"))
-        {
-            // Handle save logic here
-        }
-    }
+    // Set flags for a non-interactive, full-screen background window
+    ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+    window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+    window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
     
+    // Remove padding and border for a seamless look
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+
+    ImGui::Begin("EditorDockSpace", nullptr, window_flags);
+    ImGui::PopStyleVar(2);
+
+    // Create the DockSpace that other windows can dock into
+    ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+    ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
+
+    // Example of a menu bar that is part of the main dockspace window
+    if (ImGui::BeginMenuBar())
+    {
+        if (ImGui::BeginMenu("File"))
+        {
+            if (ImGui::MenuItem("Exit")) 
+            {
+                // Add logic to close the application
+            }
+            ImGui::EndMenu();
+        }
+        ImGui::EndMenuBar();
+    }
+
     ImGui::End();
 }
 
-void EditorView::setCurrentCampaign(Campaign currentCampaign)
+void EditorWindowView::setCurrentCampaign(Campaign currentCampaign)
 {
     _currentCampaign = currentCampaign;
     isVisible = true;

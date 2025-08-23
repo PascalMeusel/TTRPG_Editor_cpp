@@ -24,14 +24,13 @@ public:
     void Run();
 
     void activateNewWindow(WindowTypes windowToActivate);
-
 private:
     void Initialize();
     void Shutdown();
 
     GLFWwindow *m_Window;
 
-    std::shared_ptr<EditorView> editor;
+    std::shared_ptr<EditorWindowView> editor;
     std::shared_ptr<MainMenuWindowView> mainMenu;
     std::vector<std::shared_ptr<IWindowView>> m_Views;
 };

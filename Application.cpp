@@ -59,8 +59,8 @@ void Application::Initialize()
     ImGui_ImplOpenGL3_Init(glsl_version);
 
     // --- Create and add our window views ---
-    editor = std::make_shared<EditorView>(shared_from_this());
-    mainMenu = std::make_shared<MainMenuWindowView>(shared_from_this());
+    editor = std::make_shared<EditorWindowView>();
+    mainMenu = std::make_shared<MainMenuWindowView>(editor);
     m_Views.push_back(editor);
     m_Views.push_back(mainMenu);
 
