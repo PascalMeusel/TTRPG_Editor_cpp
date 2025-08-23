@@ -6,7 +6,6 @@
 #include <stdexcept>
 
 // Include our concrete window views
-#include "Views/MainMenu/MainMenuWindowView.hpp"
 // You can include other windows here, e.g., #include "SettingsWindowView.hpp"
 
 Application::Application() : m_Window(nullptr)
@@ -60,9 +59,12 @@ void Application::Initialize()
     ImGui_ImplOpenGL3_Init(glsl_version);
 
     // --- Create and add our window views ---
-    m_Views.push_back(std::make_unique<MainMenuWindowView>());
-    // To add more windows, just create them here:
-    // m_Views.push_back(std::make_unique<SettingsWindowView>());
+    editor = std::make_shared<EditorView>(shared_from_this());
+    mainMenu = std::make_shared<MainMenuWindowView>(shared_from_this());
+    m_Views.push_back(editor);
+    m_Views.push_back(mainMenu);
+
+    editor->isVisible = false;
 }
 
 void Application::Run()
@@ -86,7 +88,7 @@ void Application::Run()
         }
 
         // You can also render ImGui's built-in demo window
-        // ImGui::ShowDemoWindow();
+        ImGui::ShowDemoWindow();
 
         ImGui::Render();
         int display_w, display_h;
@@ -105,6 +107,25 @@ void Application::Run()
         }
 
         glfwSwapBuffers(m_Window);
+    }
+}
+
+void Application::activateNewWindow(WindowTypes windowToActivate)
+{
+    switch (windowToActivate)
+    {
+    case WindowTypes::EditorWindow:
+    {
+        editor->setCurrentCampaign(DatabaseManager::getInstance()->getActiveCampaign());
+        editor->isVisible = true;
+    }
+    case WindowTypes::MainMenuWindow:
+    {
+
+    }
+    
+    default:
+        break;
     }
 }
 

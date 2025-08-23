@@ -3,8 +3,8 @@
 
 int main(int, char**) {
     try {
-        Application app;
-        app.Run();
+        auto app = std::make_shared<Application>();
+        app->Run();
     } catch (const std::exception& e) {
         // A simple way to catch initialization errors
         std::cerr << "Error: " << e.what() << std::endl;

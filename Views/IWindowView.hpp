@@ -1,10 +1,15 @@
 #pragma once
 
+#include <memory>
 #include <GLFW/glfw3.h>
+
+class Application;
 
 // An "interface" for all of our window views.
 // It's an abstract class because it has a pure virtual function.
 class IWindowView {
+protected:
+    IWindowView(std::shared_ptr<Application> parent) : _parentApplication(parent) {}
 public:
     // Virtual destructor is important for base classes.
     virtual ~IWindowView() = default;
@@ -15,4 +20,7 @@ public:
 
     // A flag to easily control the window's visibility from anywhere.
     bool isVisible = true; 
+
+protected:
+    std::shared_ptr<Application> _parentApplication;
 };

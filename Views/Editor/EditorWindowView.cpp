@@ -1,7 +1,9 @@
-#include "EditorView.hpp"
+#include "EditorWindowView.hpp"
 
-void EditorView::update(GLFWwindow* window)
+void EditorView::update(GLFWwindow *window)
 {
+    if(!isVisible)
+        return;
     // Get the main viewport to determine the available drawing area
     ImGuiViewport* mainViewport = ImGui::GetMainViewport();
 
@@ -38,4 +40,10 @@ void EditorView::update(GLFWwindow* window)
     }
     
     ImGui::End();
+}
+
+void EditorView::setCurrentCampaign(Campaign currentCampaign)
+{
+    _currentCampaign = currentCampaign;
+    isVisible = true;
 }

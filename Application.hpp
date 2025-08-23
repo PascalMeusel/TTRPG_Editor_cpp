@@ -4,23 +4,34 @@
 
 #include "Views/IWindowView.hpp"
 
+#include "Views/MainMenu/MainMenuWindowView.hpp"
+#include "Views/Editor/EditorWindowView.hpp"
 // Forward declare GLFWwindow to avoid including glfw3.h in the header
 struct GLFWwindow;
 
-class Application {
+enum class WindowTypes
+{
+    MainMenuWindow,
+    EditorWindow
+};
+
+class Application : public std::enable_shared_from_this<Application>
+{
 public:
     Application();
     ~Application();
 
     void Run();
 
+    void activateNewWindow(WindowTypes windowToActivate);
+
 private:
     void Initialize();
     void Shutdown();
 
-    // Helper function to create the main menu bar
-    void RenderMainMenu();
+    GLFWwindow *m_Window;
 
-    GLFWwindow* m_Window;
-    std::vector<std::unique_ptr<IWindowView>> m_Views;
+    std::shared_ptr<EditorView> editor;
+    std::shared_ptr<MainMenuWindowView> mainMenu;
+    std::vector<std::shared_ptr<IWindowView>> m_Views;
 };
