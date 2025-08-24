@@ -44,9 +44,3 @@ void EditorWindowView::update(GLFWwindow *window)
 
     ImGui::End();
 }
-
-void EditorWindowView::setCurrentCampaign(Campaign currentCampaign)
-{
-    _currentCampaign = currentCampaign;
-    isVisible = true;
-}

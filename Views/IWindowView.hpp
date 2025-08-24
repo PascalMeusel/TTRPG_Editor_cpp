@@ -3,8 +3,6 @@
 #include <memory>
 #include <GLFW/glfw3.h>
 
-class Application;
-
 // An "interface" for all of our window views.
 // It's an abstract class because it has a pure virtual function.
 class IWindowView {
