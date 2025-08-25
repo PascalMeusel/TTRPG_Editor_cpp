@@ -23,8 +23,9 @@ public:
 
     void showCharacterCreator();
 private:
+    friend class EditorWindowView;
+    
     Campaign _currentCampaign;
     std::unique_ptr<EditorWindowView> view;
-    std::shared_ptr<CharacterCreatorController> m_characterCreator;
-    friend class EditorWindowView;
+    std::shared_ptr<CharacterCreatorController> _characterCreator;
 };

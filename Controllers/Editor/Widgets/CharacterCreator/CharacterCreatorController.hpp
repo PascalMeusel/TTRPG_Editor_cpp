@@ -16,12 +16,12 @@ public:
     void configure();
 
     // Getters for the view
-    CharacterModel &getModel() { return m_model; }
+    CharacterModel &getModel() { return _model; }
 private:
     friend class CharacterCreatorView;
-    CharacterModel m_model;
-    std::unique_ptr<CharacterCreatorView> m_view;
+    CharacterModel _model;
+    std::unique_ptr<CharacterCreatorView> _view;
     Campaign &_currentCampaign; 
 
-    void saveCharacter() {_currentCampaign.characters.push_back(m_model);};
+    void saveCharacter() {_currentCampaign.characters.push_back(_model);};
 };

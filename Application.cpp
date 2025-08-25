@@ -36,9 +36,7 @@ void Application::Initialize()
 {
     std::cout << "Anwendung wird initialisiert..." << std::endl;
     if (!glfwInit())
-    {
         throw std::runtime_error("Failed to initialize GLFW");
-    }
 
     const char *glsl_version = "#version 130";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -119,18 +117,13 @@ void Application::run()
                 if (ImGui::BeginMenu("File"))
                 {
                     if (ImGui::MenuItem("Exit"))
-                    {
                         glfwSetWindowShouldClose(mainWindow.get(), true);
-                    }
                     ImGui::EndMenu();
                 }
                 if (ImGui::BeginMenu("Widgets"))
                 {
                     if (ImGui::MenuItem("Character Creator"))
-                    {
-                        // Call the public method on the editor controller
                         editor->showCharacterCreator();
-                    }
                     if (ImGui::MenuItem("Character Sheet"))
                     {
                         // editor->showCharacterCreator(); // Uncomment when ready
