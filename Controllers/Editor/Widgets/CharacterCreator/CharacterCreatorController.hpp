@@ -2,22 +2,13 @@
 #include "Controllers/Editor/Widgets/IWidgetController.hpp"
 #include "Views/Editor/Widgets/Character/CharacterCreator/CharacterCreatorView.hpp"
 #include "Models/Character/CharacterModel.hpp"
+#include "Models/Campaign/Campaign.hpp"
 #include "Models/Rulesets/IRuleSet.hpp" // Include the ruleset interface
-
-#include "Models/DataBaseManager.hpp"
 
 class CharacterCreatorController : public IWidgetController
 {
-private:
-    friend class CharacterCreatorView;
-    CharacterModel m_model;
-    std::unique_ptr<CharacterCreatorView> m_view;
-    std::shared_ptr<IRuleSet> activeRuleset = nullptr; // Pointer to the current ruleset
-
-    void saveCharacter() {};
-
 public:
-    CharacterCreatorController();
+    CharacterCreatorController(Campaign &currentCampaign);
 
     void update(std::shared_ptr<GLFWwindow> window) override;
 
@@ -27,4 +18,13 @@ public:
     // Getters for the view
     CharacterModel &getModel() { return m_model; }
     std::shared_ptr<IRuleSet> getRuleSet() const { return activeRuleset; }
+
+private:
+    friend class CharacterCreatorView;
+    CharacterModel m_model;
+    std::unique_ptr<CharacterCreatorView> m_view;
+    std::shared_ptr<IRuleSet> activeRuleset = nullptr; // Pointer to the current ruleset
+    Campaign _currentCampaign; 
+
+    void saveCharacter() {_currentCampaign.characters.push_back(m_model);};
 };

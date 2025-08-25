@@ -1,7 +1,7 @@
 #include "CharacterCreatorController.hpp"
 #include <iostream>
 
-CharacterCreatorController::CharacterCreatorController()
+CharacterCreatorController::CharacterCreatorController(Campaign &currentCampaign) : _currentCampaign(currentCampaign)
 {
     m_view = std::make_unique<CharacterCreatorView>(*this);
 }

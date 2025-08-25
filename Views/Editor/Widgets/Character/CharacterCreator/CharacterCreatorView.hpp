@@ -1,13 +1,11 @@
 #pragma once
 #include <memory>
-
+#include "Views/Editor/Widgets/DockableWidget.hpp"
 // Forward declarations
 class CharacterCreatorController;
 
-class CharacterCreatorView
+class CharacterCreatorView : DockableWidget
 {
-private:
-    CharacterCreatorController& _controller;
 
 public:
     friend class CharacterCreatorController;
@@ -15,4 +13,6 @@ public:
 
     // Note the `bool* p_open` parameter. This is the key to self-closing.
     void update(bool* p_open);
+private:
+    CharacterCreatorController& _controller;
 };
