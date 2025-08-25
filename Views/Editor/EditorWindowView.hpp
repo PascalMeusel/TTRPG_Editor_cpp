@@ -3,19 +3,21 @@
 #include <GLFW/glfw3.h>
 
 #include "../IWindowView.hpp"
-#include "EditorWindowController.hpp"
+#include "Models/DataBaseManager.hpp"
 
-class Application;
+class EditorWindowController;
 
 class EditorWindowView : public IWindowView
 {
 public:
-    EditorWindowView() { controller = std::make_shared<EditorWindowController>(); };
+    EditorWindowView() = delete;
+    EditorWindowView(EditorWindowController &controller);
     ~EditorWindowView() = default;
-
     // Function to update the view
-    void update(GLFWwindow* window) override;
+    void update(std::shared_ptr<GLFWwindow> window) override;
 
 private:
-    std::shared_ptr<EditorWindowController> controller;
+    EditorWindowController &_controller;
+    
+    friend class EditorWindowController;
 };

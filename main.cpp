@@ -4,7 +4,7 @@
 int main(int, char**) {
     try {
         auto app = std::make_shared<Application>();
-        app->Run();
+        app->run();
     } catch (const std::exception& e) {
         // A simple way to catch initialization errors
         std::cerr << "Error: " << e.what() << std::endl;

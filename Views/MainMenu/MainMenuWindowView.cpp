@@ -1,12 +1,9 @@
 #include "MainMenuWindowView.hpp"
-
-#include "Application.hpp"
+#include "Controllers/MainMenu/MainMenuWindowController.hpp"
 
 // The update method now takes the window pointer as an argument
-void MainMenuWindowView::update(GLFWwindow *window)
+void MainMenuWindowView::update(std::shared_ptr<GLFWwindow> window)
 {
-    if(!isVisible)
-        return;
     _currentChoice = MainMenuOption::None;
     // Get the main viewport to determine the available drawing area
     ImGuiViewport *mainViewport = ImGui::GetMainViewport();
@@ -73,16 +70,16 @@ void MainMenuWindowView::update(GLFWwindow *window)
         {
             // If clicked, tell GLFW to close the window.
             // The main loop in Application::Run() will detect this and exit.
-            glfwSetWindowShouldClose(window, true);
+            glfwSetWindowShouldClose(window.get(), true);
         }
-        handleNewGame();
-        handleLoadGame();
+        handleNewGamePopup();
+        handleLoadGamePopup();
     }
     // Always call End, even if Begin returned false
     ImGui::End();
 }
 
-void MainMenuWindowView::handleNewGame()
+void MainMenuWindowView::handleNewGamePopup()
 {
     if (ImGui::BeginPopupModal("New Game", &_showNewGamePopup, ImGuiWindowFlags_AlwaysAutoResize))
     {
@@ -121,8 +118,7 @@ void MainMenuWindowView::handleNewGame()
             }
             if (!campaignNameExists)
             {
-                DatabaseManager::getInstance()->saveCampaign(newCampaign);
-                openEditor(newCampaign);
+                _controller.handleNewGame(newCampaign);
             }
             else
             {
@@ -146,7 +142,7 @@ void MainMenuWindowView::handleNewGame()
     }
 }
 
-void MainMenuWindowView::handleLoadGame()
+void MainMenuWindowView::handleLoadGamePopup()
 {
     if (ImGui::BeginPopupModal("Load Game", &_showLoadGamePopup, ImGuiWindowFlags_AlwaysAutoResize))
     {
@@ -164,19 +160,11 @@ void MainMenuWindowView::handleLoadGame()
 
         if (ImGui::Button("Load", ImVec2(120, 0)))
         {
-            auto chosenCampaign = DatabaseManager::getInstance()->loadCampaign(campaignNames[_selectedLoadGameIndex]);
-            openEditor(chosenCampaign);
+            _controller.handleLoadGame(campaigns[_selectedLoadGameIndex]);
             // Close the popup
             _showLoadGamePopup = false;
             ImGui::CloseCurrentPopup();
         }
         ImGui::EndPopup();
     }
-}
-
-void MainMenuWindowView::openEditor(Campaign campaign)
-{
-    this->isVisible = false;
-    _editor->isVisible = true;
-    _editor->setCurrentCampaign(campaign);
 }

@@ -37,6 +37,10 @@ add_executable(TTRPG_Editor
     Application.cpp
     Views/MainMenu/MainMenuWindowView.cpp
     Views/Editor/EditorWindowView.cpp
+    Views/Editor/Widgets/Character/CharacterCreator/CharacterCreatorView.cpp
+    Controllers/MainMenu/MainMenuWindowController.cpp
+    Controllers/Editor/EditorWindowController.cpp
+    Controllers/Editor/Widgets/CharacterCreator/CharacterCreatorController.cpp
     Models/DataBaseManager.cpp
     extern/imgui/imgui.cpp
     extern/imgui/imgui_draw.cpp

@@ -11,11 +11,10 @@
 #include <GLFW/glfw3.h>
 
 #include "../IWindowView.hpp"
-#include "../Editor/EditorWindowView.hpp"
 #include "../../Models/DataBaseManager.hpp"
 #include "../../Models/Rulesets/DND/DND5e.hpp"
 
-class Application;
+class MainMenuWindowController;
 
 enum class MainMenuOption
 {
@@ -30,33 +29,34 @@ enum class MainMenuOption
 class MainMenuWindowView : public IWindowView
 {
 public:
-    MainMenuWindowView(std::shared_ptr<EditorWindowView> editorView)
-        : _editor(editorView)
+    MainMenuWindowView() = delete;
+    MainMenuWindowView(MainMenuWindowController &controller) : _controller(controller)
     {
         ruleSets.push_back(std::make_unique<DND5e>()); // Add a default ruleset, e.g., DND5e
     }
     ~MainMenuWindowView() = default;
 
     // Function to update the view
-    void update(GLFWwindow *window) override;
+    void update(std::shared_ptr<GLFWwindow>) override;
 
 protected:
+    MainMenuWindowController &_controller;
     std::vector<std::shared_ptr<IRuleSet>> ruleSets;
 
+    friend class MainMenuWindowController;
+
     // New game dialogWindow
-    void handleNewGame();
     bool _showNewGamePopup = false;
     std::string _campaignName = std::string();
     int _selectedRuleIndex = 0;
+    void handleNewGamePopup();
 
     // Load game dialogWindow
-    void handleLoadGame();
     bool _showLoadGamePopup = false;
     int _selectedLoadGameIndex = 0;
+    void handleLoadGamePopup();
 
     void openEditor(Campaign campaign);
 
     MainMenuOption _currentChoice = MainMenuOption::None;
-
-    std::shared_ptr<EditorWindowView> _editor;
 };
