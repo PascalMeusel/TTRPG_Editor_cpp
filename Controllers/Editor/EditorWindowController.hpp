@@ -18,12 +18,12 @@ public:
 
     virtual WindowTypes getWindowType() override;
     virtual bool getWindowActive() override;
-    void inline setCurrentCampaign(Campaign currentCampaign) { _currentCampaign = currentCampaign; }
+    void inline setCurrentCampaign(Campaign &currentCampaign) { _currentCampaign = currentCampaign; }
     Campaign inline getCurrentCampaign() const { return _currentCampaign; }
 
     void showCharacterCreator();
 private:
-    Campaign _currentCampaign;
+    Campaign &_currentCampaign;
     std::unique_ptr<EditorWindowView> view;
     std::shared_ptr<CharacterCreatorController> m_characterCreator;
     friend class EditorWindowView;

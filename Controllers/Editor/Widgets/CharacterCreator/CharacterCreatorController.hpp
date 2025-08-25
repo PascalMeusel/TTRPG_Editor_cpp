@@ -4,12 +4,17 @@
 #include "Models/Character/CharacterModel.hpp"
 #include "Models/Rulesets/IRuleSet.hpp" // Include the ruleset interface
 
+#include "Models/DataBaseManager.hpp"
+
 class CharacterCreatorController : public IWidgetController
 {
 private:
+    friend class CharacterCreatorView;
     CharacterModel m_model;
     std::unique_ptr<CharacterCreatorView> m_view;
     std::shared_ptr<IRuleSet> activeRuleset = nullptr; // Pointer to the current ruleset
+
+    void saveCharacter() {};
 
 public:
     CharacterCreatorController();

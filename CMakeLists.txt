@@ -31,17 +31,11 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(SQLiteCpp)
 
-# --- Main Executable ---
-add_executable(TTRPG_Editor
-    main.cpp
-    Application.cpp
-    Views/MainMenu/MainMenuWindowView.cpp
-    Views/Editor/EditorWindowView.cpp
-    Views/Editor/Widgets/Character/CharacterCreator/CharacterCreatorView.cpp
-    Controllers/MainMenu/MainMenuWindowController.cpp
-    Controllers/Editor/EditorWindowController.cpp
-    Controllers/Editor/Widgets/CharacterCreator/CharacterCreatorController.cpp
-    Models/DataBaseManager.cpp
+file(GLOB_RECURSE CONTROLLER_SOURCES "Controllers/*.cpp")
+file(GLOB_RECURSE VIEW_SOURCES "Views/*.cpp")
+file(GLOB_RECURSE MODEL_SOURCES "Models/*.cpp")
+
+set(IMGUI_SOURCES
     extern/imgui/imgui.cpp
     extern/imgui/imgui_draw.cpp
     extern/imgui/imgui_widgets.cpp
@@ -50,6 +44,15 @@ add_executable(TTRPG_Editor
     extern/imgui/misc/cpp/imgui_stdlib.cpp
     extern/imgui/backends/imgui_impl_glfw.cpp
     extern/imgui/backends/imgui_impl_opengl3.cpp
+)
+
+add_executable(TTRPG_Editor
+    main.cpp
+    Application.cpp
+    ${CONTROLLER_SOURCES}
+    ${VIEW_SOURCES}
+    ${MODEL_SOURCES}
+    ${IMGUI_SOURCES}
 )
 
 # --- Includes ---

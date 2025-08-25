@@ -10,6 +10,7 @@ private:
     CharacterCreatorController& _controller;
 
 public:
+    friend class CharacterCreatorController;
     explicit CharacterCreatorView(CharacterCreatorController& controller);
 
     // Note the `bool* p_open` parameter. This is the key to self-closing.

@@ -73,6 +73,7 @@ void CharacterCreatorView::update(bool* p_open)
 
     if (ImGui::Button("Create Character"))
     {
+        _controller.saveCharacter();
         // TODO: Add logic to create the character object and save it.
         _controller.hide();
     }
