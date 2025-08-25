@@ -10,9 +10,7 @@ class CharacterCreatorView : DockableWidget
 public:
     friend class CharacterCreatorController;
     explicit CharacterCreatorView(CharacterCreatorController& controller);
-
-    // Note the `bool* p_open` parameter. This is the key to self-closing.
-    void update(bool* p_open);
-private:
+protected:
+    void draw() override;
     CharacterCreatorController& _controller;
 };

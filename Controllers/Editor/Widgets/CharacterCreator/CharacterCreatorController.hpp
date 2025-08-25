@@ -13,18 +13,15 @@ public:
     void update(std::shared_ptr<GLFWwindow> window) override;
 
     // New method to configure the widget with the active ruleset
-    void configure(std::shared_ptr<IRuleSet> ruleSet);
+    void configure();
 
     // Getters for the view
     CharacterModel &getModel() { return m_model; }
-    std::shared_ptr<IRuleSet> getRuleSet() const { return activeRuleset; }
-
 private:
     friend class CharacterCreatorView;
     CharacterModel m_model;
     std::unique_ptr<CharacterCreatorView> m_view;
-    std::shared_ptr<IRuleSet> activeRuleset = nullptr; // Pointer to the current ruleset
-    Campaign _currentCampaign; 
+    Campaign &_currentCampaign; 
 
     void saveCharacter() {_currentCampaign.characters.push_back(m_model);};
 };

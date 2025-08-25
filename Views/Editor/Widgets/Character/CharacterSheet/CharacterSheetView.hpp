@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../DockableWidget.hpp"
+#include "Views/Editor/Widgets/DockableWidget.hpp"
 
 class CharacterSheetView : public DockableWidget
 {

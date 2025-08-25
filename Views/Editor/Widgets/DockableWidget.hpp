@@ -17,7 +17,7 @@ public:
 
     // This is the main public method to be called in your application loop.
     // It handles the Begin/End calls and calls the internal draw method.
-    void render();
+    void update();
 
     // Methods to control the visibility of the window
     void show();

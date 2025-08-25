@@ -6,7 +6,7 @@ DockableWidget::DockableWidget(const std::string& title, ImGuiWindowFlags flags)
     // You can add any other default setup here
 }
 
-void DockableWidget::render()
+void DockableWidget::update()
 {
     // If the window is not visible, do nothing.
     if (!_isVisible)

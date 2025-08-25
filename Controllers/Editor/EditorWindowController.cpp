@@ -5,7 +5,7 @@
 EditorWindowController::EditorWindowController()
 {
     view = std::make_unique<EditorWindowView>(*this);
-    m_characterCreator = std::make_shared<CharacterCreatorController>();
+    m_characterCreator = std::make_shared<CharacterCreatorController>(_currentCampaign);
 }
 
 EditorWindowController::~EditorWindowController() = default;
@@ -17,7 +17,6 @@ void EditorWindowController::update(std::shared_ptr<GLFWwindow> window)
     view->update(window);
     if(m_characterCreator->isOpen())
     {
-        std::cout << "showing creator" << "\n";
         m_characterCreator->update(window);
     }
 }
@@ -37,13 +36,6 @@ void EditorWindowController::setWindowOpacity(bool showView)
 
 void EditorWindowController::showCharacterCreator()
 {
-    std::shared_ptr<IRuleSet> ruleSet = _currentCampaign.ruleSet;
-    if (!ruleSet) {
-        std::cerr << "Cannot open Character Creator: Active campaign has no ruleset." << std::endl;
-        return;
-    }
-
-    // Configure the widget with the ruleset BEFORE showing it
-    m_characterCreator->configure(ruleSet);
+    m_characterCreator->configure();
     m_characterCreator->show();
 }
