@@ -5,6 +5,8 @@
 #include "Models/Campaign/Campaign.hpp"
 #include "Models/Rulesets/IRuleSet.hpp" // Include the ruleset interface
 
+#include "iostream"
+
 class CharacterCreatorController : public IWidgetController
 {
 public:
@@ -12,16 +14,18 @@ public:
 
     void update(std::shared_ptr<GLFWwindow> window) override;
 
-    // New method to configure the widget with the active ruleset
-    void configure();
-
+    void toggleVisibility();
     // Getters for the view
     CharacterModel &getModel() { return _model; }
+
 private:
     friend class CharacterCreatorView;
+    Campaign &_currentCampaign;
     CharacterModel _model;
-    std::unique_ptr<CharacterCreatorView> _view;
-    Campaign &_currentCampaign; 
+    std::shared_ptr<CharacterCreatorView> _view;
 
-    void saveCharacter() {_currentCampaign.characters.push_back(_model);};
+    void saveCharacter()
+    {
+        _currentCampaign.characters.push_back(_model);
+    };
 };

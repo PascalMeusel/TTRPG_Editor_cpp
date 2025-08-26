@@ -4,7 +4,7 @@
 // Forward declarations
 class CharacterCreatorController;
 
-class CharacterCreatorView : DockableWidget
+class CharacterCreatorView : public DockableWidget
 {
 
 public:

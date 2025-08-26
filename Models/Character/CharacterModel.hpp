@@ -5,7 +5,7 @@
 
 struct CharacterModel
 {
-    char nameBuffer[128] = "Hero";
+    std::string name = "Hero";
     int level = 1;
 
     // Use a map to store attributes dynamically. Key = attribute name, Value = score.
@@ -14,4 +14,6 @@ struct CharacterModel
     // Store the selected class and race as strings
     std::string selectedClass;
     std::string selectedRace;
+
+    
 };

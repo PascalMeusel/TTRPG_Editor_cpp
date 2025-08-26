@@ -1,13 +1,12 @@
 #pragma once
 #include <memory>
 #include <GLFW/glfw3.h>
-
+#include "Views/Editor/Widgets/DockableWidget.hpp"
 // An interface for all editor widgets
 class IWidgetController
 {
 protected:
-    // Widgets start closed by default
-    bool m_isOpen = false;
+    std::shared_ptr<DockableWidget> widget;
 
 public:
     virtual ~IWidgetController() = default;
@@ -16,7 +15,9 @@ public:
     virtual void update(std::shared_ptr<GLFWwindow> window) = 0;
 
     // Public methods to control visibility
-    void show() { m_isOpen = true; }
-    void hide() { m_isOpen = false; }
-    bool isOpen() const { return m_isOpen; }
+    void show() { widget->show(); }
+    void hide() { widget->hide(); }
+    bool isOpen() const { return widget->isVisible(); }
+
+    virtual void toggleVisibility() { widget->toggleVisibility(); }
 };

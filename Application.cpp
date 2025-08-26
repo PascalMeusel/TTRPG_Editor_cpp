@@ -122,11 +122,13 @@ void Application::run()
                 }
                 if (ImGui::BeginMenu("Widgets"))
                 {
-                    if (ImGui::MenuItem("Character Creator"))
-                        editor->showCharacterCreator();
-                    if (ImGui::MenuItem("Character Sheet"))
+                    if (ImGui::MenuItem("Character Creator", "", editor->characterCreatorVisible()))
                     {
-                        // editor->showCharacterCreator(); // Uncomment when ready
+                        editor->toggleCharacterCreator();
+                    }
+                    if (ImGui::MenuItem("Character Sheet", "", editor->characterSheetVisible()))
+                    {
+                        editor->toggleCharacterSheet();
                     }
                     ImGui::EndMenu();
                 }

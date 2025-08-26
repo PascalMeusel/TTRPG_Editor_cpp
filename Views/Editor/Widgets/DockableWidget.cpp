@@ -1,7 +1,7 @@
 #include "DockableWidget.hpp"
 
 DockableWidget::DockableWidget(const std::string& title, ImGuiWindowFlags flags)
-    : _title(title), _isVisible(true), _flags(flags)
+    : _title(title), _isVisible(false), _flags(flags)
 {
     // You can add any other default setup here
 }

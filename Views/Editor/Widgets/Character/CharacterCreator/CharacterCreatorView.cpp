@@ -3,38 +3,18 @@
 #include "Models/Character/CharacterModel.hpp"
 #include "Models/Rulesets/IRuleSet.hpp"
 #include "imgui.h"
+#include "misc/cpp/imgui_stdlib.h"
 
 #include <iostream>
 
 CharacterCreatorView::CharacterCreatorView(CharacterCreatorController &controller) : DockableWidget("CharacterCreator", 0), _controller(controller) {}
-
-// Helper function for creating dynamic combo boxes
-void RenderCombo(const char *label, const std::vector<std::string> &items, std::string &current_item)
-{
-    if (ImGui::BeginCombo(label, current_item.c_str()))
-    {
-        for (const auto &item : items)
-        {
-            const bool is_selected = (current_item == item);
-            if (ImGui::Selectable(item.c_str(), is_selected))
-            {
-                current_item = item;
-            }
-            if (is_selected)
-            {
-                ImGui::SetItemDefaultFocus();
-            }
-        }
-        ImGui::EndCombo();
-    }
-}
 
 void CharacterCreatorView::draw()
 {
     // Get the model and ruleset from the controller
     CharacterModel &model = _controller.getModel();
 
-    ImGui::InputText("Name", model.nameBuffer, 128);
+    ImGui::InputText("Name", &model.name);
 
     // --- Dynamically render UI elements ---
 

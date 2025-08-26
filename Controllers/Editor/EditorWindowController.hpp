@@ -4,6 +4,7 @@
 #include "../IWindowController.hpp"
 #include "WindowTypes.hpp"
 #include "Controllers/Editor/Widgets/CharacterCreator/CharacterCreatorController.hpp"
+#include "Controllers/Editor/Widgets/CharacterSheet/CharacterSheetController.hpp"
 #include <iostream>
 class EditorWindowView;
 class EditorWindowController : public IWindowController
@@ -18,14 +19,19 @@ public:
 
     virtual WindowTypes getWindowType() override;
     virtual bool getWindowActive() override;
-    void inline setCurrentCampaign(Campaign currentCampaign) { _currentCampaign = currentCampaign; }
+    void setCurrentCampaign(Campaign currentCampaign);
     Campaign inline getCurrentCampaign() const { return _currentCampaign; }
 
-    void showCharacterCreator();
+    bool characterCreatorVisible() {return _characterCreator->isOpen();}
+    void toggleCharacterCreator();
+    bool characterSheetVisible() {return _characterSheet->isOpen();}
+    void toggleCharacterSheet();
+
 private:
     friend class EditorWindowView;
+    std::unique_ptr<CharacterCreatorController> _characterCreator;
+    std::unique_ptr<CharacterSheetController> _characterSheet;
     
     Campaign _currentCampaign;
     std::unique_ptr<EditorWindowView> view;
-    std::shared_ptr<CharacterCreatorController> _characterCreator;
 };

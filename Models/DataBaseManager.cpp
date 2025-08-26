@@ -116,7 +116,7 @@ void DatabaseManager::saveCampaign(const Campaign &campaign)
         for (const auto &character : campaign.characters)
         {
             query_insert_char.bind(1, campaignId);
-            query_insert_char.bind(2, std::string(character.nameBuffer));
+            query_insert_char.bind(2, character.name);
             query_insert_char.bind(3, character.level);
             query_insert_char.bind(4, character.selectedClass);
             query_insert_char.bind(5, character.selectedRace);
@@ -156,10 +156,8 @@ std::vector<Campaign> DatabaseManager::loadAllCampaigns()
                 while (query_chars.executeStep())
                 {
                     CharacterModel character;
-                    std::string name = query_chars.getColumn(0).getString();
-                    strncpy(character.nameBuffer, name.c_str(), sizeof(character.nameBuffer) - 1);
-                    character.nameBuffer[sizeof(character.nameBuffer) - 1] = '\0'; // Ensure null-termination
 
+                    character.name = query_chars.getColumn(0).getString();
                     character.level = query_chars.getColumn(1).getInt();
                     character.selectedClass = query_chars.getColumn(2).getString();
                     character.selectedRace = query_chars.getColumn(3).getString();

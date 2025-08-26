@@ -2,6 +2,7 @@
 
 #include "imgui.h"
 #include <string>
+#include "Helpers.hpp"
 
 // An abstract base class for any window that needs to be dockable,
 // movable, and resizable.
