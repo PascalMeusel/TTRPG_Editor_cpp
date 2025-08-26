@@ -24,8 +24,5 @@ private:
     CharacterModel _model;
     std::shared_ptr<CharacterCreatorView> _view;
 
-    void saveCharacter()
-    {
-        _currentCampaign.characters.push_back(_model);
-    };
+    void saveCharacter();
 };

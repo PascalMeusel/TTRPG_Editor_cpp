@@ -3,8 +3,8 @@
 #include "../../Models/Campaign/Campaign.hpp"
 #include "../IWindowController.hpp"
 #include "WindowTypes.hpp"
-#include "Controllers/Editor/Widgets/CharacterCreator/CharacterCreatorController.hpp"
-#include "Controllers/Editor/Widgets/CharacterSheet/CharacterSheetController.hpp"
+#include "Controllers/Editor/Widgets/Character/CharacterCreator/CharacterCreatorController.hpp"
+#include "Controllers/Editor/Widgets/Character/CharacterSheet/CharacterSheetController.hpp"
 #include <iostream>
 class EditorWindowView;
 class EditorWindowController : public IWindowController
@@ -20,7 +20,7 @@ public:
     virtual WindowTypes getWindowType() override;
     virtual bool getWindowActive() override;
     void setCurrentCampaign(Campaign currentCampaign);
-    Campaign inline getCurrentCampaign() const { return _currentCampaign; }
+    Campaign inline &getCurrentCampaign() const { return const_cast<Campaign&>(_currentCampaign); }
 
     bool characterCreatorVisible() {return _characterCreator->isOpen();}
     void toggleCharacterCreator();

@@ -5,6 +5,7 @@
 #include "Views/Editor/Widgets/DockableWidget.hpp"
 
 class CharacterSheetController;
+class CharacterModel;
 
 class CharacterSheetView : public DockableWidget
 {
